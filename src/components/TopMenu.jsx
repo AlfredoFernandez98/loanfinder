@@ -115,7 +115,7 @@ function TopMenu() {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/" onClick={closeMenu}>
+          <NavLink to="/customerservice" onClick={closeMenu}>
             Kunderservice
           </NavLink>
         </li>

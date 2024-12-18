@@ -102,9 +102,9 @@ function LogIn({ login }) {
         />
         <ButtonGroup>
           <button type="submit">Login</button>
-          {/* <button type="button" onClick={() => navigate("/signup")}>
+          <button type="button" onClick={() => navigate("/signup")}>
             Sign Up
-          </button> */}
+          </button>
         </ButtonGroup>
       </form>
     </LoginContainer>

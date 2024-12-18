@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import Bg from "../images/background.png";
 
 const GlobalStyle = createGlobalStyle`
 
@@ -8,6 +9,13 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-size: 16px;
     
+}
+
+html, body, #root {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 #root {
@@ -44,6 +52,12 @@ body {
     align-items: center;
     width: 100wh;
     height: 100vh;
+    background-image: url(${Bg});
+     background-size: cover; /* Ensures the image covers the entire page */
+    background-repeat: no-repeat;
+    background-position: center; /* Centers the image */
+    background-attachment: fixed; /* Keeps the background fixed while scrolling */
+    min-height: 100vh; /* Ensures body fills the entire viewport */
 }
 
 header {
@@ -54,10 +68,12 @@ header {
 }
 
 main {
-    padding: 2rem 1rem;
+    padding: 2rem 0rem;
     width: 100%;
     max-width: var(--small-device);
     min-height: 80vh;
+
+    
 }
 
 footer {

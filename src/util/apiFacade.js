@@ -1,4 +1,6 @@
-const URL = "https://bankapi.alfredofernandez.dk/api";
+// const URL = "https://bankapi.alfredofernandez.dk/api";
+
+const URL = "http://localhost:7070/api";
 
 function handleHttpErrors(res) {
   if (!res.ok) {
@@ -29,17 +31,24 @@ object when you do)*/
 
   const login = (user, password) => {
     /*TODO*/
-    const options = makeOptions("POST", false, {username: user, password: password });
-    console.log('login', user, password)
-    console.log('options', JSON.stringify(options))
+    const options = makeOptions("POST", false, {
+      username: user,
+      password: password,
+    });
+    console.log("login", user, password);
+    console.log("options", JSON.stringify(options));
     return fetch(URL + "/auth/login", options)
-        .then(handleHttpErrors)
-        .then(res => {setToken(res.token) })
-        
-   
+      .then(handleHttpErrors)
+      .then((res) => {
+        setToken(res.token);
+        localStorage.setItem("name", res.name); // Gem navnet i localStorage
+
+      });
   };
-  const fetchData = () => {
-    /*TODO */
+  // Generel fetchData-metode til GET, POST, PUT, DELETE
+  const fetchData = (endpoint, method = "GET", body = null) => {
+    const options = makeOptions(method, true, body);
+    return fetch(URL + endpoint, options).then(handleHttpErrors);
   };
   const makeOptions = (method, addToken, body) => {
     var opts = {
@@ -50,13 +59,44 @@ object when you do)*/
       },
     };
     if (addToken && loggedIn()) {
-      opts.headers["Authentication"] = `Bearer ${getToken()}`;
+      opts.headers["Authorization"] = `Bearer ${getToken()}`;
     }
     if (body) {
       opts.body = JSON.stringify(body);
     }
     return opts;
   };
+
+  const getUserRoles = () => {
+    const token = getToken()
+    if (token != null) {
+        const payloadBase64 = getToken().split('.')[1]
+        const decodedClaims = JSON.parse(window.atob(payloadBase64))
+        const roles = decodedClaims.roles
+        return roles
+    } else return ""
+}
+
+const hasUserAccess = (neededRole, loggedIn) => {
+    const roles = getUserRoles().split(',')
+    return loggedIn && roles.includes(neededRole)
+}
+
+const getUsername = () =>{
+    const token = getToken()
+    if (token != null) {
+        const payloadBase64 = getToken().split('.')[1]
+        const decodedClaims = JSON.parse(window.atob(payloadBase64))
+        const username = decodedClaims.sub
+        return username
+    } else return ""
+}
+
+const getName = () => {
+ return localStorage.getItem("name");
+};
+
+
   return {
     makeOptions,
     setToken,
@@ -65,6 +105,10 @@ object when you do)*/
     login,
     logout,
     fetchData,
+    getUserRoles,
+    hasUserAccess,
+    getUsername,
+    getName,
   };
 }
 const facade = apiFacade();
