@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useState, useContext } from "react"; // Tilføj useContext
 import { AuthContext } from "../main"; // Import AuthContext
 
-
 //Assets
 import logo from "../assets/logo.png";
 
@@ -14,19 +13,18 @@ const StyledNav = styled.nav`
   padding: 0 20px;
   flex-wrap: wrap;
 
-
   @media (max-width: 770px) {
-    flex-direction:wrap; /* Stak elementerne vertikalt */
+    flex-direction: wrap; /* Stak elementerne vertikalt */
 
     align-items: center; /* Placer alt i starten */
   }
-  
 `;
 
 const StyledMenu = styled.ul.attrs((props) => ({
   "data-is-open": props.isOpen, // Brug data-attribut i stedet for isOpen
 }))`
-display: ${(props) => (props.isOpen ? "flex" : "none")}; /* Toggle menu visibility */
+  display: ${(props) =>
+    props.isOpen ? "flex" : "none"}; /* Toggle menu visibility */
   flex-direction: column; /* Vertikal stack for små skærme */
   list-style: none;
   gap: 0.5rem; /* Mindre mellemrum */
@@ -54,7 +52,6 @@ display: ${(props) => (props.isOpen ? "flex" : "none")}; /* Toggle menu visibili
   }
 `;
 
-
 const StyledLogo = styled.div`
   display: flex;
   align-items: center;
@@ -62,11 +59,10 @@ const StyledLogo = styled.div`
   img {
     height: 4rem; /* Adjust size to fit the layout */
     max-width: 100%; /* Ensure the image doesn't overflow */
-    
   }
 `;
 const StyledToggleButton = styled.button`
-   background: none;
+  background: none;
   border: none;
   color: #4e8bf4;
   font-size: 2rem; /* Gør ikonet mere synligt */
@@ -78,8 +74,6 @@ const StyledToggleButton = styled.button`
     display: none; /* Skjul knappen på store skærme */
   }
 `;
-
-
 
 function TopMenu() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -127,10 +121,14 @@ function TopMenu() {
           </li>
         ) : (
           <li>
-            <NavLink to="/" onClick={() => {
-              handleLogout();
-              closeMenu();
-            }} style={{ textDecoration: 'none' }}>
+            <NavLink
+              to="/"
+              onClick={() => {
+                handleLogout();
+                closeMenu();
+              }}
+              style={{ textDecoration: "none" }}
+            >
               <button
                 style={{
                   background: "none",

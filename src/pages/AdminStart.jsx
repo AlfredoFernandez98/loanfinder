@@ -107,12 +107,13 @@ const LoadingMessage = styled.p`
 
 
 
-function AdminStart( ) {
-  const [dataFromServer, setDataFromServer] = useState("Loading...")
-
+function AdminStart() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(""); // Til søgning
+  const [currentPage, setCurrentPage] = useState(1); // Til pagination
+  const usersPerPage = 4; // Antal brugere pr. side
   const navigate = useNavigate();
 
   // Hent brugere fra serveren ved component mount
@@ -120,7 +121,7 @@ function AdminStart( ) {
     fetchUsers();
   }, []);
 
-const fetchUsers = async () => {
+  const fetchUsers = async () => {
     try {
       const fetchedUsers = await facade.fetchData("/users/");
       setUsers(fetchedUsers);
@@ -131,8 +132,6 @@ const fetchUsers = async () => {
       setLoading(false);
     }
   };
-     
-
 
   const deleteUser = async (id) => {
     try {
@@ -149,7 +148,17 @@ const fetchUsers = async () => {
     navigate(`/update-user/${id}`);
   };
 
-  
+  // Filtrér brugere baseret på søgning
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Pagination logik
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <Container>
@@ -159,43 +168,92 @@ const fetchUsers = async () => {
         <button onClick={() => navigate("/adminbanks")}>Banker</button>
         <button onClick={() => navigate("/requests")}>Requests</button>
         <button onClick={() => navigate("/loans")}>Loans</button>
-      
       </Navigation>
 
       <SectionTitle>Brugere</SectionTitle>
+
+      {/* Søgefelt */}
+      <input
+        type="text"
+        placeholder="Søg efter bruger..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        style={{
+          padding: "0.5rem",
+          marginBottom: "1rem",
+          fontSize: "1rem",
+          width: "100%",
+          border: "1px solid #ddd",
+          borderRadius: "5px",
+        }}
+      />
+
       {loading ? (
         <LoadingMessage>Loading...</LoadingMessage>
       ) : error ? (
         <LoadingMessage style={{ color: "red" }}>{error}</LoadingMessage>
       ) : (
-        <Table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Fuldnavn</th>
-              <th>Handlinger</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>
-                  <ActionButton className="update" onClick={() => updateUser(user.id)}>
-                    Opdater
-                  </ActionButton>
-                  <ActionButton className="delete" onClick={() => deleteUser(user.id)}>
-                    Slet
-                  </ActionButton>
-                </td>
+        <>
+          <Table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Fuldnavn</th>
+                <th>Handlinger</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {currentUsers.map((user) => (
+                <tr key={user.id}>
+                  <td>{user.id}</td>
+                  <td>{user.name}</td>
+                  <td>
+                    <ActionButton
+                      className="update"
+                      onClick={() => updateUser(user.id)}
+                    >
+                      Opdater
+                    </ActionButton>
+                    <ActionButton
+                      className="delete"
+                      onClick={() => deleteUser(user.id)}
+                    >
+                      Slet
+                    </ActionButton>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+
+          {/* Pagination */}
+          <div style={{ textAlign: "center", margin: "1rem 0" }}>
+            {Array.from(
+              { length: Math.ceil(filteredUsers.length / usersPerPage) },
+              (_, i) => (
+                <button
+                  key={i + 1}
+                  onClick={() => paginate(i + 1)}
+                  style={{
+                    margin: "0 0.5rem",
+                    padding: "0.5rem 1rem",
+                    border: "none",
+                    backgroundColor:
+                      currentPage === i + 1 ? "#4e8bf4" : "#ddd",
+                    color: currentPage === i + 1 ? "#fff" : "#000",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                  }}
+                >
+                  {i + 1}
+                </button>
+              )
+            )}
+          </div>
+        </>
       )}
-      
     </Container>
   );
 }
-export default AdminStart
+
+export default AdminStart;

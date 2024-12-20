@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import facade from "../util/apiFacade";
+import { Await } from "react-router";
 
 const SignUpContainer = styled.div`
   display: flex;
@@ -54,51 +56,76 @@ function SignUp() {
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
-    email: "",
+    name: "",
   });
 
   const onChange = (evt) => {
     const value = evt.target.value;
+    const id = evt.target.id;
     setCredentials({
       ...credentials,
-      [evt.target.id]: value,
+      [id]: value,
     });
   };
 
-  const handleSignUp = (evt) => {
+  const handleSignUp = async (evt) => {
     evt.preventDefault();
-    console.log("User created:", credentials);
-    alert("User registered successfully!");
+  
+    try {
+      // Payload til backend
+      const payload = {
+        username: credentials.username, // Brugernavn
+        password: credentials.password, // Password
+        name: credentials.name          // LoanUser's navn
+      };
+  
+      // Send POST-anmodning til /loanuser/register
+      const response = await facade.fetchData("/users/register", "POST", payload);
+  
+      alert("User and LoanUser created successfully!");
+      console.log("Response:", response);
+  
+      // Ryd formularen efter succes
+      setCredentials({ username: "", password: "", name: "" });
+    } catch (err) {
+      const fullError = await err.fullError;
+      console.error("Backend error:", fullError);
+      alert(`Error: ${fullError.message || "Unknown error occurred"}`);
+    }
   };
 
   return (
     <SignUpContainer>
       <h2>Sign Up</h2>
       <form onSubmit={handleSignUp}>
+        {/* Input til username */}
         <input
           placeholder="User Name"
           id="username"
           value={credentials.username}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
         />
+        {/* Input til password */}
         <input
           placeholder="Password"
           id="password"
           type="password"
           value={credentials.password}
-          onChange={onChange}
+          onChange={(e) => onChange(e)}
         />
+        {/* Input til name */}
         <input
-          placeholder="Email"
-          id="email"
-          type="email"
-          value={credentials.email}
-          onChange={onChange}
+          placeholder="Loan User Name"
+          id="name"
+          value={credentials.name}
+          onChange={(e) => onChange(e)}
         />
+        {/* Submit knap */}
         <button type="submit">Sign Up</button>
       </form>
     </SignUpContainer>
   );
+  
 }
 
 export default SignUp;

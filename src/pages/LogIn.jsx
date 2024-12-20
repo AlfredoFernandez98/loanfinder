@@ -65,6 +65,7 @@ const ButtonGroup = styled.div`
 `;
 
 function LogIn({ login }) {
+  const navigate = useNavigate();
  
   const init = { username: "", password: "" };
   const [loginCredentials, setLoginCredentials] = useState(init);

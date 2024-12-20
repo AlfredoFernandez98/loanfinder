@@ -14,6 +14,8 @@ import AdminStart from './pages/AdminStart.jsx';
 import AdminBanks from './pages/AdminBanks.jsx';
 import CustomerService from './pages/CustomerService.jsx';
 import UserStart from './pages/UserStart.jsx';
+import Request from './pages/Request.jsx';
+import Loans from './pages/Loans.jsx';
 
 // Util
 import facade from './util/apiFacade.js';
@@ -105,6 +107,22 @@ const App = () => {
           element={
             <PrivateRoute requiredRole="admin">
               <AdminBanks />
+            </PrivateRoute>
+          }
+        />
+         <Route
+          path="requests"
+          element={
+            <PrivateRoute requiredRole="admin">
+              <Request/>
+            </PrivateRoute>
+          }
+        />
+         <Route
+          path="loans"
+          element={
+            <PrivateRoute requiredRole="admin">
+              <Loans/>
             </PrivateRoute>
           }
         />
