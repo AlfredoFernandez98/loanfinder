@@ -289,7 +289,7 @@ function CustomerService() {
           <SectionTitle>Kontakt os</SectionTitle>
           <ContactList>
             <ContactItem>
-              <div className="icon">✉️</div>
+              <div className="icon">E</div>
               <div className="content">
                 <div className="label">Email</div>
                 <div className="value">
@@ -299,7 +299,7 @@ function CustomerService() {
             </ContactItem>
 
             <ContactItem>
-              <div className="icon">📞</div>
+              <div className="icon">T</div>
               <div className="content">
                 <div className="label">Telefon</div>
                 <div className="value">
@@ -309,7 +309,7 @@ function CustomerService() {
             </ContactItem>
 
             <ContactItem>
-              <div className="icon">⏰</div>
+              <div className="icon">T</div>
               <div className="content">
                 <div className="label">Åbningstider</div>
                 <div className="value">Mandag - Fredag: 09:00 - 17:00</div>
@@ -317,7 +317,7 @@ function CustomerService() {
             </ContactItem>
 
             <ContactItem>
-              <div className="icon">📍</div>
+              <div className="icon">A</div>
               <div className="content">
                 <div className="label">Adresse</div>
                 <div className="value">

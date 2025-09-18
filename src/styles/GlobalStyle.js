@@ -271,6 +271,36 @@ const GlobalStyle = createGlobalStyle`
     outline: 2px solid var(--primary-500);
     outline-offset: 2px;
   }
+
+  /* Trust badges and security indicators */
+  .trust-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-2) var(--space-4);
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: var(--radius-lg);
+    color: var(--success);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    margin: var(--space-2);
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(16, 185, 129, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .icon {
+      margin-right: var(--space-2);
+    }
+  }
+
+  .security-badge {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+    color: var(--primary-600);
+  }
 `
 
 export default GlobalStyle

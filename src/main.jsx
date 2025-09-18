@@ -16,6 +16,8 @@ import CustomerService from './pages/CustomerService.jsx';
 import UserStart from './pages/UserStart.jsx';
 import Request from './pages/Request.jsx';
 import Loans from './pages/Loans.jsx';
+import HowItWorks from './pages/HowItWorks.jsx';
+import BankPartners from './pages/BankPartners.jsx';
 
 // Util
 import facade from './util/apiFacade.js';
@@ -74,6 +76,8 @@ const App = () => {
         {/* Public Routes */}
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
+        <Route path="hvordan" element={<HowItWorks />} />
+        <Route path="banker" element={<BankPartners />} />
         <Route path="customerservice" element={<CustomerService />} />
         <Route path="signup" element={<SignUp />} />
 

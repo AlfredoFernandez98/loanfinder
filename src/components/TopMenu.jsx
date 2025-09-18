@@ -57,7 +57,7 @@ const StyledMenu = styled.ul.attrs((props) => ({
   @media (min-width: 770px) {
     display: flex;
     flex-direction: row;
-    gap: var(--space-8);
+    gap: var(--space-6);
     width: auto;
     position: static;
     background: none;
@@ -67,6 +67,7 @@ const StyledMenu = styled.ul.attrs((props) => ({
     border: none;
     padding: 0;
     animation: none;
+    align-items: center;
   }
 
   li {
@@ -113,14 +114,55 @@ const StyledMenu = styled.ul.attrs((props) => ({
           }
         }
       }
+
+      &.signup-link {
+        background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+        color: white;
+        font-weight: 600;
+        margin-top: var(--space-2);
+        
+        &:hover {
+          background: linear-gradient(135deg, var(--primary-700), var(--primary-800));
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-lg);
+        }
+      }
+
+      &.login-link {
+        border: 2px solid var(--primary-200);
+        background: rgba(255, 255, 255, 0.9);
+        
+        &:hover {
+          border-color: var(--primary-400);
+          background: var(--primary-50);
+        }
+      }
       
       @media (min-width: 770px) {
-        padding: var(--space-2) var(--space-4);
+        padding: var(--space-3) var(--space-5);
+        font-size: var(--font-size-sm);
         
         &:hover {
           background: transparent;
           transform: none;
         }
+
+        &.signup-link:hover,
+        &.login-link:hover {
+          transform: translateY(-1px);
+        }
+      }
+    }
+
+    .auth-section {
+      border-top: 1px solid var(--gray-200);
+      padding-top: var(--space-4);
+      margin-top: var(--space-4);
+
+      @media (min-width: 770px) {
+        border-top: none;
+        padding-top: 0;
+        margin-top: 0;
       }
     }
   }
@@ -227,25 +269,42 @@ function TopMenu() {
       <StyledMenu isOpen={menuOpen}>
         <li>
           <NavLink to="/" onClick={closeMenu}>
-            Home
+            Hjem
           </NavLink>
         </li>
         <li>
           <NavLink to="/about" onClick={closeMenu}>
-            LoanFinder
+            Om os
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/hvordan" onClick={closeMenu}>
+            Sådan virker det
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/banker" onClick={closeMenu}>
+            Partnere
           </NavLink>
         </li>
         <li>
           <NavLink to="/customerservice" onClick={closeMenu}>
-            Kunderservice
+            Support
           </NavLink>
         </li>
         {!user ? (
-          <li>
-            <NavLink to="/login" onClick={closeMenu}>
-              Login
-            </NavLink>
-          </li>
+          <>
+            <li className="auth-section">
+              <NavLink to="/signup" onClick={closeMenu} className="signup-link">
+                Opret konto
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/login" onClick={closeMenu} className="login-link">
+                Log ind
+              </NavLink>
+            </li>
+          </>
         ) : (
           <li>
             <LogoutButton
@@ -254,7 +313,7 @@ function TopMenu() {
                 closeMenu();
               }}
             >
-              Logud
+              Log ud
             </LogoutButton>
           </li>
         )}

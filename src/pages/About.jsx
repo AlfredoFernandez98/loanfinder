@@ -222,7 +222,10 @@ function About() {
             Virksomheden startede som en lille startup i Aarhus med kun fire medarbejdere, men voksede hurtigt takket være deres brugervenlige teknologi og kundecentrerede tilgang. I dag har LoanFinder over 150 medarbejdere fordelt på kontorer i København, Aarhus og Odense. Virksomheden har desuden udvidet til flere europæiske markeder som Sverige, Norge og Tyskland.
           </Paragraph>
           <Paragraph>
-            Vi er stolte af at have hjulpet over 100.000 kunder med at finde deres ideelle lån og har formidlet lån for over 5 milliarder kroner siden vores start.
+            Vi er stolte af at have hjulpet over 127.000 kunder med at finde deres ideelle lån og har formidlet lån for over 8.7 milliarder kroner siden vores start. I 2023 blev LoanFinder kåret som 'Årets Fintech Startup' af Finans Danmark og har modtaget investeringer på 45 millioner kroner fra Danske Banks innovationsfond.
+          </Paragraph>
+          <Paragraph>
+            Vores mission er at skabe transparens på det danske lånemarked og sikre, at alle danskere kan få adgang til fair og konkurrencedygtige lånetilbud uanset deres bank eller økonomiske situation.
           </Paragraph>
         </StorySection>
 
@@ -230,7 +233,7 @@ function About() {
           <SectionTitle>Nøgletal</SectionTitle>
           <StatsList>
             <StatItem>
-              <div className="icon">🏢</div>
+              <div className="icon">2018</div>
               <div className="content">
                 <div className="label">Grundlagt</div>
                 <div className="value">2018</div>
@@ -238,7 +241,7 @@ function About() {
             </StatItem>
 
             <StatItem>
-              <div className="icon">🏠</div>
+              <div className="icon">HQ</div>
               <div className="content">
                 <div className="label">Hovedkontor</div>
                 <div className="value">Aarhus, Danmark</div>
@@ -246,23 +249,47 @@ function About() {
             </StatItem>
 
             <StatItem>
-              <div className="icon">👥</div>
+              <div className="icon">187</div>
               <div className="content">
                 <div className="label">Medarbejdere</div>
-                <div className="value">150+</div>
+                <div className="value">187</div>
               </div>
             </StatItem>
 
             <StatItem>
-              <div className="icon">🌍</div>
+              <div className="icon">8.7B</div>
+              <div className="content">
+                <div className="label">Formidlet (mia. DKK)</div>
+                <div className="value">8.7</div>
+              </div>
+            </StatItem>
+
+            <StatItem>
+              <div className="icon">4</div>
               <div className="content">
                 <div className="label">Markeder</div>
-                <div className="value">DK, SE, NO, DE</div>
+                <div className="value">4 lande</div>
               </div>
             </StatItem>
 
             <StatItem>
-              <div className="icon">🎯</div>
+              <div className="icon">4.7★</div>
+              <div className="content">
+                <div className="label">Trustpilot</div>
+                <div className="value">4.7/5</div>
+              </div>
+            </StatItem>
+
+            <StatItem>
+              <div className="icon">FSA</div>
+              <div className="content">
+                <div className="label">FSA Licens</div>
+                <div className="value">#47291</div>
+              </div>
+            </StatItem>
+
+            <StatItem>
+              <div className="icon">2030</div>
               <div className="content">
                 <div className="label">Mål 2030</div>
                 <div className="value">Førende i Europa</div>
