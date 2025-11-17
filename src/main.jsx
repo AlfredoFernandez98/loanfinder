@@ -1,11 +1,10 @@
 import React, { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Navigate } from 'react-router';
-// Layouts
-import MainLayout from './layouts/MainLayout.jsx';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Navigate } from 'react-router-dom';
 
-// Pages
+// Importer layout og sider
+import MainLayout from './layouts/MainLayout.jsx';
 import Home from './pages/Home.jsx';
 import About from './pages/About.jsx';
 import Login from './pages/LogIn.jsx';
@@ -17,33 +16,37 @@ import UserStart from './pages/UserStart.jsx';
 import Request from './pages/Request.jsx';
 import Loans from './pages/Loans.jsx';
 
-// Util
+// Importer hjælpefunktioner
 import facade from './util/apiFacade.js';
 
-// PrivateRoute Component
+// Komponent til at beskytte ruter baseret på brugerroller
 const PrivateRoute = ({ children, requiredRole }) => {
   const { user } = React.useContext(AuthContext);
 
+  // Omdiriger til login, hvis ingen bruger er logget ind
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
+  // Omdiriger til hjemmesiden, hvis brugerens rolle ikke matcher den krævede
   if (requiredRole && user.role !== requiredRole) {
     return <Navigate to="/" replace />;
   }
 
+  // Render børnekomponenter, hvis rollekravet er opfyldt
   return children;
 };
 
-// Login Context to share state between components
+// Context til at dele autentifikationsstatus mellem komponenter
 export const AuthContext = React.createContext();
 
 const App = () => {
   const [user, setUser] = useState(null);
 
+  // Håndter brugerlogin
   const handleLogin = async (username, password) => {
     try {
-      await facade.login(username, password); // Call login from the facade
+      await facade.login(username, password);
       const token = facade.getToken();
       const role = token ? JSON.parse(atob(token.split('.')[1])).roles : null;
       setUser({ token, role });
@@ -55,12 +58,14 @@ const App = () => {
     }
   };
 
+  // Håndter brugerlogout
   const handleLogout = () => {
-    facade.logout(); // Clear token
-    setUser(null); // Clear user data
+    facade.logout();
+    setUser(null);
     console.log('User logged out');
   };
 
+  // Opsæt router med ruter
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route
@@ -71,13 +76,13 @@ const App = () => {
           </AuthContext.Provider>
         }
       >
-        {/* Public Routes */}
+        {/* Definer offentlige ruter */}
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="customerservice" element={<CustomerService />} />
         <Route path="signup" element={<SignUp />} />
 
-        {/* Login Route */}
+        {/* Definer betinget loginrute */}
         <Route
           path="login"
           element={
@@ -93,7 +98,7 @@ const App = () => {
           }
         />
 
-        {/* Admin Routes */}
+        {/* Definer admin-ruter */}
         <Route
           path="admin"
           element={
@@ -127,7 +132,7 @@ const App = () => {
           }
         />
 
-        {/* User Route */}
+        {/* Definer brugerrute */}
         <Route
           path="user"
           element={
@@ -137,7 +142,7 @@ const App = () => {
           }
         />
 
-        {/* Fallback Route */}
+        {/* Fallback-rute for ukendte stier */}
         <Route path="*" element={<div>Not Found</div>} />
       </Route>
     )
